@@ -69,8 +69,8 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
-				'<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+			this._div.innerHTML = '<h4>Unions of Bangladesh</h4>' +  (props ?
+				'Selected region <br /><b>' + props.NAME_4 + '</b> under ' + props.NAME_3 + ' upazilla <br />District: ' + props.NAME_3 + ' '
 				: 'Hover over a regions');
 		};
 
@@ -140,9 +140,6 @@
 			style: style,
 			onEachFeature: onEachFeature
 		}).addTo(map);
-
-		map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
-
 
 		var legend = L.control({position: 'bottomright'});
 
