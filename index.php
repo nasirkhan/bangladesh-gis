@@ -31,10 +31,10 @@
 
         <div class="masthead">
           <ul class="nav nav-pills pull-right">
-            <li class="active"><a href="index.html"><i class="icon-home"></i> Home</a></li>
-            <li><a href="project.html"><i class="icon-list"></i> Project</a></li>
+            <li class="active"><a href="index.php"><i class="icon-home"></i> Home</a></li>
+            <li><a href="project.php"><i class="icon-list"></i> Project</a></li>
             <!-- <li><a href="#"><i class="icon-home"></i> About</a></li> -->
-            <li><a href="contact.html"><i class="icon-envelope"></i> Contact</a></li>
+            <li><a href="contact.php"><i class="icon-envelope"></i> Contact</a></li>
           </ul>
           <h3 class="muted">Bangladesh GIS Project</h3>
         </div>
