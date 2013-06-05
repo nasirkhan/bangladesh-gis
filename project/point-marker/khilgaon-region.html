@@ -6,7 +6,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+	<!-- Leafletjs CDN css link -->
+	<!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" /> -->
+	<link rel="stylesheet" href="../library/leafletjs/leaflet.css" />
  	<!--[if lte IE 8]>
     	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
     <![endif]-->
@@ -14,10 +16,13 @@
  <body>
  	<div id="map" style="width: 600px; height: 400px"></div>
 
- 	<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+ 	<!-- Leafletjs CDN js link -->
+ 	<!-- <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script> -->
+ 	<script src="../library/leafletjs/leaflet.js"></script>
  	<script>
 
- 	var map = L.map('map').setView([23.780465,90.416706], 13);
+ 	// load a map which has the center at the coordinate 23.75092,90.4253
+ 	var map = L.map('map').setView([23.75092,90.4253], 13);
 
  	L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
  		maxZoom: 18,
@@ -25,8 +30,10 @@
  	}).addTo(map);
 
 
- 	L.marker([23.780465,90.416706]).addTo(map)
- 	.bindPopup("<b>Gulshan 1 circle</b><br />this is a popup.").openPopup();
+ 	L.marker([23.75092,90.4253]).addTo(map)
+ 	.bindPopup("<b>Khilgaon Thana").openPopup();
+
+ 	23.7518, 90.42458
 
 
 
