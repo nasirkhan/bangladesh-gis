@@ -8,11 +8,11 @@
 
 	<!-- Leafletjs CDN css link -->
 	<!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" /> -->
-	<link rel="stylesheet" href="../library/leafletjs/leaflet.css" />
+	<link rel="stylesheet" href="library/leafletjs/leaflet.css" />
 	<!-- Font Awesome local -->
-	<link rel="stylesheet" href="../library/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="library/font-awesome/css/font-awesome.min.css">
 	<!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="../library/leaflet.awesome-markers/leaflet.awesome-markers.css">
+	<link rel="stylesheet" href="library/leaflet.awesome-markers/leaflet.awesome-markers.css">
 	
 	
  	<!--[if lte IE 8]>
@@ -24,8 +24,8 @@
 
     	<!-- Leafletjs CDN js link -->
     	<!-- <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script> -->
-    	<script src="../library/leafletjs/leaflet.js"></script>
-    	<script src="../library/leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
+    	<script src="library/leafletjs/leaflet.js"></script>
+    	<script src="library/leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
 
     	<script>
 
@@ -60,8 +60,7 @@
  	});
  	
 
- 	L.marker([23.75092,90.4253]).addTo(map)
- 	.bindPopup("<b>Khilgaon Thana");
+ 	L.marker([23.75092,90.4253]).addTo(map).bindPopup("<b>Khilgaon Thana");
 
  	L.marker([23.7518, 90.42458], {icon: shoppingCartMarker}).addTo(map).bindPopup("<b>Khilgaon Taltala Market");
 
@@ -69,11 +68,8 @@
 
  	L.marker([23.750277,90.422378], {icon: homeMarker}).addTo(map).bindPopup("<b>Khilgaon Girls' School And College");
 
- 	// L.marker([23.735973,90.425034]).addTo(map).bindPopup("<b>Railway Hospital");
  	L.marker([23.735973,90.425034], {icon: redMarker}).addTo(map).bindPopup("<b>Railway Hospital");
 
- 	// L.marker([23.746363,90.421128]).addTo(map)
- 	// .bindPopup("<b>Jheel Mosque");
  	L.marker([23.746363,90.421128], {icon: hospitalMarker}).addTo(map).bindPopup("<b>Jheel Mosque");
 
  	L.marker([23.746579,90.412545], {icon: shoppingCartMarker}).addTo(map).bindPopup("<b>Mouchak Market");
