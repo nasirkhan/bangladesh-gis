@@ -1,22 +1,22 @@
-{ "type": "Feature", "properties": 
-{ 
-	"ID_0": 23, 
-	"ISO": "BGD", 
-	"NAME_0": "Bangladesh", 
-	"ID_1": 326, 
-	"NAME_1": "Chittagong", 
-	"VARNAME_1": "Chattagram|Parbattya Chattagram|Rangamati", 
-	"NL_NAME_1": null, 
-	"HASC_1": "BD.CG", 
-	"CC_1": null, 
-	"TYPE_1": "Bibhag", 
-	"ENGTYPE_1": "Division", 
-	"VALIDFR_1": "1998", 
-	"VALIDTO_1": "Present", 
-	"REMARKS_1": null, 
-	"Shape_Leng": 25.9513590633, 
-	"Shape_Area": 2.74992507404 
-}, 
+//{ "type": "Feature", "properties": 
+//{ 
+//	"ID_0": 23, 
+//	"ISO": "BGD", 
+//	"NAME_0": "Bangladesh", 
+//	"ID_1": 326, 
+//	"NAME_1": "Chittagong", 
+//	"VARNAME_1": "Chattagram|Parbattya Chattagram|Rangamati", 
+//	"NL_NAME_1": null, 
+//	"HASC_1": "BD.CG", 
+//	"CC_1": null, 
+//	"TYPE_1": "Bibhag", 
+//	"ENGTYPE_1": "Division", 
+//	"VALIDFR_1": "1998", 
+//	"VALIDTO_1": "Present", 
+//	"REMARKS_1": null, 
+//	"Shape_Leng": 25.9513590633, 
+//	"Shape_Area": 2.74992507404 
+//}, 
 "geometry": 
 { 
 	"type": "MultiPolygon", 
