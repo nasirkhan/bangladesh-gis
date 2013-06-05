@@ -8,9 +8,9 @@
   <meta name="author" content="">
 
   <!-- Le styles -->
-  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -43,16 +43,43 @@
 
         <div class="row-fluid">
           <h2>Project page</h2>
-          <p>
-            <ul>
-              <li><a href="asset/base_files/bd_admin_0.html">Map Overlay whole Bangladesh</a></li>
-              <li><a href="asset/base_files/bd_admin_1.html">Map Overlay Divisions of Bangladesh</a></li>
-              <li><a href="asset/base_files/bd_admin_2.html">Map Overlay Districts of Bangladesh</a></li>
-              <li><a href="asset/base_files/bd_admin_3.html">Map Overlay Upazillas of Bangladesh</a></li>              
-              <li><a href="asset/base_files/bd_admin_4.html">Map Overlay Unions of Bangladesh</a></li>              
-            </ul> 
-          </p>
+          <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                  <h4>Example With point coordinates</h4>
+                </a>
+              </div>
+              <div id="collapseOne" class="accordion-body collapse in">
+                <div class="accordion-inner">
+                  <ul>
+                    <li><a href="project/point-marker/khilgaon-region.html">Khilgaon Region | Point marker example</a></li>
+                  </ul>                  
+                </div>
+              </div>
+            </div>
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                  <h4>Bangladesh Choropleth Map</h4>
+                </a>
+              </div>
+              <div id="collapseTwo" class="accordion-body collapse">
+                <div class="accordion-inner">
+                  <ul>
+                    <li><a href="asset/base_files/bd_admin_0.html">Map Overlay whole Bangladesh</a></li>
+                    <li><a href="asset/base_files/bd_admin_1.html">Map Overlay Divisions of Bangladesh</a></li>
+                    <li><a href="asset/base_files/bd_admin_2.html">Map Overlay Districts of Bangladesh</a></li>
+                    <li><a href="asset/base_files/bd_admin_3.html">Map Overlay Upazillas of Bangladesh</a></li>           
+                    <li><a href="asset/base_files/bd_admin_4.html">Map Overlay Unions of Bangladesh</a></li>              
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        
         <!-- <div class="row-fluid">
           <div class="span6">
 
