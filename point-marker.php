@@ -5,8 +5,12 @@ require_once 'configuration.php';
  * Get all the UHC
  */
 $sql = "SELECT * FROM organisationunit WHERE featureType LIKE 'point' AND type LIKE 'Upazila Health Complex'";
-$result = mysql_query($sql)or die(mysql_error()."<br>Query<br>_____<br>$sql<br>");
-$row_count = mysql_num_rows($result);
+$result = mysql_query($sql) or die(mysql_error() . "<br>Query<br>_____<br>$sql<br>");
+$result_upazila_health_complex = $result;
+
+$sql = "SELECT * FROM organisationunit WHERE featureType LIKE 'point' AND type LIKE 'UH & FWC/FP Clinic/Union Sub Centers'";
+$result = mysql_query($sql) or die(mysql_error() . "<br>Query<br>_____<br>$sql<br>");
+$result_uh_fwc_usc = $result;
 
 /*
  * To change this template, choose Tools | Templates
@@ -47,7 +51,7 @@ $row_count = mysql_num_rows($result);
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="../assets/js/html5shiv.js"></script>
-        <![endif]-->
+          <![endif]-->
 
         <!-- Fav and touch icons -->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -147,142 +151,16 @@ $row_count = mysql_num_rows($result);
                 </div><!--/.well -->
             </div><!--/span-->
             <div class="span9">
-                <!--                <div class="hero-unit">
-                                    <h1>Hello, world!</h1>
-                                    <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                                    <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-                                </div>-->
                 <div class="row-fluid">
                     <div id="map" style="width: 600px; height: 550px"></div>
-                    <input class="btn btn-info" type="button" onclick="leadRocket();" value="Load Rocket"/>
+                    <!-- <input class="btn btn-info" type="button" onclick="leadRocket();" value="Load Rocket"/>
                     <input class="btn btn-warning" type="button" onclick="clear_khilgaon();" value="Clear All"/>
-                    <input class="btn btn-primary" type="button" onclick="load_khilgaon();" value="Load Khilgaon"/>
+                    <input class="btn btn-primary" type="button" onclick="load_khilgaon();" value="Load Khilgaon"/> -->                    
+
                     
-                    <!-- Leafletjs CDN js link -->
-                    <!-- <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script> -->
-                    <script src="library/leafletjs/leaflet.js"></script>
-                    <script src="library/leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
-                    
-                    <script>
 
-                        // load a map which has the center at the coordinate 23.75092,90.4253
-                        var khilgaonRegion = new L.layerGroup();
-                        var all_UHC = new L.layerGroup();
-                        // var map = L.map('map').setView([23.75092, 90.4253], 13);
-                        var map = L.map('map', {
-                            center : [23.75092, 90.4253],
-                            zoom : 7,
-                            layers: [all_UHC]
-                        });
-
-
-                        L.tileLayer('http://{s}.tile.cloudmade.com/bd92fa43571c4092bfc457e9c839d54f/997/256/{z}/{x}/{y}.png', {
-                            maxZoom: 18,
-                            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-                        }).addTo(map);
-
-                        var hospitalMarker = L.AwesomeMarkers.icon({
-                            icon: 'hospital',
-                            color: 'red'
-                        });
-                        var redMarker = L.AwesomeMarkers.icon({
-                            icon: 'spinner',
-                            color: 'red',
-                            spin: true
-                        });
-                        var homeMarker = L.AwesomeMarkers.icon({
-                            icon: 'home',
-                            color: 'darkblue'
-                        });
-                        var shoppingCartMarker = L.AwesomeMarkers.icon({
-                            icon: 'shopping-cart',
-                            color: 'green'
-                        });
-                        var rocketMarker = L.AwesomeMarkers.icon({
-                            icon: 'rocket',
-                            color: 'cadetblue'
-                        });
-
-
-                        // L.marker([23.75092, 90.4253]).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Thana");
-
-                        // L.marker([23.7518, 90.42458], {icon: shoppingCartMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Taltala Market");
-
-                        // L.marker([23.750635, 90.420871], {icon: homeMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Govt High School");
-
-                        // L.marker([23.750277, 90.422378], {icon: homeMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Girls' School And College");
-
-                        // L.marker([23.735973, 90.425034], {icon: redMarker}).addTo(khilgaonRegion).bindPopup("<b>Railway Hospital");
-
-                        // L.marker([23.746363, 90.421128], {icon: hospitalMarker}).addTo(khilgaonRegion).bindPopup("<b>Jheel Mosque");
-
-                        // L.marker([23.746579, 90.412545], {icon: shoppingCartMarker}).addTo(khilgaonRegion).bindPopup("<b>Mouchak Market");
-
-                        <?php
-                            while($location = mysql_fetch_assoc($result)){
-                                $location_name = $location[name];
-                                $latitude = $location[latitude];
-                                $longitude = $location[longitude];
-                                echo "L.marker([$latitude, $longitude], {icon: hospitalMarker}).addTo(all_UHC).bindPopup(\"$location_name\");";
-                            }
-                        ?>
-                        
-                        function leadRocket(){
-                            L.marker([23.770893, 90.414412], {icon: rocketMarker}).addTo(map).bindPopup("<b>Hatir Jheel");
-                        }
-                        function clear_khilgaon(){
-                            khilgaonRegion.clearLayers();
-                        }
-                        function load_khilgaon(){
-                            khilgaonRegion.addTo(map);
-                        }
-
-                        var popup = L.popup();
-                        function onMapClick(e) {
-                            popup.setLatLng(e.latlng)
-                                 .setContent("You clicked the map at " + e.latlng.toString())
-                                 .openOn(map);
-                        }
-
-                        map.on('click', onMapClick);
-
-                    </script>
-                    <!--                    <div class="span4">
-                                            <h2>Heading</h2>
-                                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                            <p><a class="btn" href="#">View details &raquo;</a></p>
-                                        </div>/span
-                                        <div class="span4">
-                                            <h2>Heading</h2>
-                                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                            <p><a class="btn" href="#">View details &raquo;</a></p>
-                                        </div>/span
-                                        <div class="span4">
-                                            <h2>Heading</h2>
-                                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                            <p><a class="btn" href="#">View details &raquo;</a></p>
-                                        </div>/span
-                                    </div>/row
-                                    <div class="row-fluid">
-                                        <div class="span4">
-                                            <h2>Heading</h2>
-                                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                            <p><a class="btn" href="#">View details &raquo;</a></p>
-                                        </div>/span
-                                        <div class="span4">
-                                            <h2>Heading</h2>
-                                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                            <p><a class="btn" href="#">View details &raquo;</a></p>
-                                        </div>/span
-                                        <div class="span4">
-                                            <h2>Heading</h2>
-                                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                            <p><a class="btn" href="#">View details &raquo;</a></p>
-                                        </div>/span
-                                    </div> --> <!--/row-->
-                </div><!--/span-->
-            </div><!--/row-->
-
+                </div><!--/row-->
+            </div><!--/span-->
             <hr>
 
 
@@ -306,6 +184,111 @@ $row_count = mysql_num_rows($result);
                     e.stopPropagation();
                 });
             });
+        </script>
+        <script src="library/leafletjs/leaflet.js"></script>
+        <script src="library/leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
+
+        <script>
+            var hospitalMarker = L.AwesomeMarkers.icon({
+                icon: 'hospital',
+                color: 'red'
+            });
+            var redHospitalMarker = L.AwesomeMarkers.icon({
+                icon: 'hospital',
+                color: 'red'
+            });
+            var greenHospitalMarker = L.AwesomeMarkers.icon({
+                icon: 'hospital',
+                color: 'green'
+            });
+            var redMarker = L.AwesomeMarkers.icon({
+                icon: 'spinner',
+                color: 'red',
+                spin: true
+            });
+            var homeMarker = L.AwesomeMarkers.icon({
+                icon: 'home',
+                color: 'darkblue'
+            });
+            var shoppingCartMarker = L.AwesomeMarkers.icon({
+                icon: 'shopping-cart',
+                color: 'green'
+            });
+            var rocketMarker = L.AwesomeMarkers.icon({
+                icon: 'rocket',
+                color: 'cadetblue'
+            });
+
+            // load a map which has the center at the coordinate 23.75092,90.4253
+            var khilgaonRegion = new L.layerGroup();
+            var all_UHC = new L.layerGroup();
+            var all_USC = new L.layerGroup();
+
+            // var map = L.map('map').setView([23.75092, 90.4253], 13);
+            var map = L.map('map', {
+                center: [23.75092, 90.4253],
+                zoom: 7,
+                layers: [all_USC]
+            });
+
+
+            L.tileLayer('http://{s}.tile.cloudmade.com/bd92fa43571c4092bfc457e9c839d54f/997/256/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+            }).addTo(map);
+
+            
+
+
+            // L.marker([23.75092, 90.4253]).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Thana");
+
+            // L.marker([23.7518, 90.42458], {icon: shoppingCartMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Taltala Market");
+
+            // L.marker([23.750635, 90.420871], {icon: homeMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Govt High School");
+
+            // L.marker([23.750277, 90.422378], {icon: homeMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Girls' School And College");
+
+            // L.marker([23.735973, 90.425034], {icon: redMarker}).addTo(khilgaonRegion).bindPopup("<b>Railway Hospital");
+
+            // L.marker([23.746363, 90.421128], {icon: hospitalMarker}).addTo(khilgaonRegion).bindPopup("<b>Jheel Mosque");
+
+            // L.marker([23.746579, 90.412545], {icon: shoppingCartMarker}).addTo(khilgaonRegion).bindPopup("<b>Mouchak Market");
+
+            <?php
+            // while ($location = mysql_fetch_assoc($result_upazila_health_complex)) {
+            //     $location_name = $location[name];
+            //     $latitude = $location[latitude];
+            //     $longitude = $location[longitude];
+            //     echo "L.marker([$latitude, $longitude], {icon: redHospitalMarker}).addTo(all_UHC).bindPopup(\"$location_name\");";
+            // }
+
+            while ($usc_location = mysql_fetch_assoc($result_uh_fwc_usc)) {
+                $location_name = $usc_location[name];
+                $latitude = $usc_location[latitude];
+                $longitude = $usc_location[longitude];
+                echo "L.marker([$latitude, $longitude], {icon: greenHospitalMarker}).addTo(all_USC).bindPopup(\"$location_name\");";
+            }
+            ?>
+
+            function leadRocket() {
+                L.marker([23.770893, 90.414412], {icon: rocketMarker}).addTo(map).bindPopup("<b>Hatir Jheel");
+            }
+            function clear_khilgaon() {
+                khilgaonRegion.clearLayers();
+            }
+            function load_khilgaon() {
+                khilgaonRegion.addTo(map);
+            }
+
+            var popup = L.popup();
+            function onMapClick(e) {
+                popup.setLatLng(e.latlng)
+                        .setContent("You clicked the map at " + e.latlng.toString())
+                        .openOn(map);
+            }
+
+            map.on('click', onMapClick);
+
         </script>
 
 </body>
