@@ -1,94 +1,148 @@
+<?php
+require_once 'configuration.php';
+
+/**
+ * uhc locations information
+ */
+//$sql = "SELECT * FROM organisationunit WHERE type LIKE 'Upazila Health Complex' AND coordinates NOT LIKE 'null' ORDER BY organisationunit.type";
+//$result = mysql_query($sql) or die(mysql_error() . "<b>Query:</b><br>$sql<br>");
+//$uhc_location_count = mysql_num_rows($result);
+//$usc_location_result = $result;
+
+//echo "<pre>";
+//print_r(mysql_fetch_assoc($usc_location_result));
+
+//while ($location = mysql_fetch_assoc($result)) {
+//    $uhc_location[name] = $location[name];
+//    $uhc_location[latitude] = $location[latitude];
+//    $uhc_location[longitude] = $location[longitude];
+//}
+
+/**
+ * uhc Sadar locations information
+ */
+$sql = "SELECT * FROM organisationunit WHERE type LIKE 'Upazila Health Complex (Sadar)' AND coordinates NOT LIKE 'null' ORDER BY organisationunit.type";
+$result = mysql_query($sql) or die(mysql_error() . "<b>Query:</b><br>$sql<br>");
+$uhc_location_count = mysql_num_rows($result);
+
+while ($location = mysql_fetch_assoc($result)) {
+    $uhc_sadar_location[name] = $location[name];
+    $uhc_sadar_location[latitude] = $location[latitude];
+    $uhc_sadar_location[longitude] = $location[longitude];
+}
+?>
+
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Khilgaon Region | Point marker example</title>
-	
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <title>Khilgaon Region | Point marker example</title>
 
-	<!-- Leafletjs CDN css link -->
-	<!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" /> -->
-	<link rel="stylesheet" href="library/leafletjs/leaflet.css" />
-	<!-- Font Awesome local -->
-	<link rel="stylesheet" href="library/font-awesome/css/font-awesome.min.css">
-	<!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="library/leaflet.awesome-markers/leaflet.awesome-markers.css">
-	
-	
- 	<!--[if lte IE 8]>
-    	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
-    	<![endif]-->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Leafletjs CDN css link -->
+        <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" /> -->
+        <link rel="stylesheet" href="library/leafletjs/leaflet.css" />
+        <!-- Font Awesome local -->
+        <link rel="stylesheet" href="library/font-awesome/css/font-awesome.min.css">
+        <!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet"> -->
+        <link rel="stylesheet" href="library/leaflet.awesome-markers/leaflet.awesome-markers.css">
+
+
+        <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+        <![endif]-->
     </head>
     <body>
-    	<div id="map" style="width: 600px; height: 400px"></div>
+        <div id="map" style="width: 600px; height: 400px"></div>
 
-    	<!-- Leafletjs CDN js link -->
-    	<!-- <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script> -->
-    	<script src="library/leafletjs/leaflet.js"></script>
-    	<script src="library/leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
+        <!-- Leafletjs CDN js link -->
+        <!-- <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script> -->
+        <script src="library/leafletjs/leaflet.js"></script>
+        <script src="library/leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
 
-    	<script>
+        <script>
 
- 	// load a map which has the center at the coordinate 23.75092,90.4253
- 	var map = L.map('map').setView([23.75092,90.4253], 13);
+            // create map marker
+            var redHospitalMarker = L.AwesomeMarkers.icon({icon: 'hospital', color: 'red'});
+            var greenHospitalMarker = L.AwesomeMarkers.icon({icon: 'hospital', color: 'green'});
+            var redMarker = L.AwesomeMarkers.icon({icon: 'spinner', color: 'red', spin: true});
+            var homeMarker = L.AwesomeMarkers.icon({icon: 'home', color: 'darkblue'});
+            var shoppingCartMarker = L.AwesomeMarkers.icon({icon: 'shopping-cart', color: 'green'});
+            var rocketMarker = L.AwesomeMarkers.icon({icon: 'rocket', color: 'cadetblue'});
 
- 	L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
- 		maxZoom: 18,
- 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
- 	}).addTo(map);
+            // create layer groups
+            var khilgaonRegion = new L.layerGroup();
+            var all_UHC = new L.layerGroup();
+            var all_UHC_sadar = new L.layerGroup();
+            var all_USC = new L.layerGroup();
 
- 	var hospitalMarker = L.AwesomeMarkers.icon({
- 		icon: 'hospital', 
- 		color: 'red'
- 	});
- 	var redMarker = L.AwesomeMarkers.icon({
- 		icon: 'spinner', 
- 		color: 'red',
- 		spin: true
- 	});
- 	var homeMarker = L.AwesomeMarkers.icon({
- 		icon: 'home', 
- 		color: 'darkblue'
- 	});
- 	var shoppingCartMarker = L.AwesomeMarkers.icon({
- 		icon: 'shopping-cart', 
- 		color: 'green'
- 	});
- 	var rocketMarker = L.AwesomeMarkers.icon({
- 		icon: 'rocket', 
- 		color: 'cadetblue'
- 	});
- 	
+            <?php
+            /**
+             * 
+             * upazilla locations
+             * 
+             * */
+            $sql = "SELECT * FROM organisationunit WHERE type LIKE 'Upazila Health Complex' AND coordinates NOT LIKE 'null' ORDER BY organisationunit.type";
+            $result = mysql_query($sql) or die(mysql_error() . "<b>Query:</b><br>$sql<br>");
+            $uhc_location_marker = "redHospitalMarker";
+            
+            while ($location = mysql_fetch_assoc($result)) {
+            	$lat= (double) $location[latitude];
+            	$long= (double) $location[longitude];
+                echo "L.marker([$lat, $long], {icon: $uhc_location_marker}).addTo(all_UHC).bindPopup(\"$location[name]\"); ";            	
+            }
 
- 	L.marker([23.75092,90.4253]).addTo(map).bindPopup("<b>Khilgaon Thana");
+            /**
+             * 
+             * upazilla sadar locations
+             * 
+             * */
+            $sql = "SELECT * FROM organisationunit WHERE type LIKE 'Upazila Health Complex (Sadar)' AND coordinates NOT LIKE 'null' ORDER BY type";
+            $result = mysql_query($sql) or die(mysql_error() . "<b>Query:</b><br>$sql<br>");
+            $uhc_sadar_location_marker = "greenHospitalMarker";
+            
+            while ($location = mysql_fetch_assoc($result)) {
+            	$lat= (double) $location[latitude];
+            	$long= (double) $location[longitude];
+                echo "L.marker([$lat, $long], {icon: $uhc_sadar_location_marker}).addTo(all_UHC_sadar).bindPopup(\"$location[name]\"); ";            	
+            }
+            
+            ?>
 
- 	L.marker([23.7518, 90.42458], {icon: shoppingCartMarker}).addTo(map).bindPopup("<b>Khilgaon Taltala Market");
+            var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/bd92fa43571c4092bfc457e9c839d54f/{styleId}/256/{z}/{x}/{y}.png',
+                    cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade';
+            var minimal = L.tileLayer(cloudmadeUrl, {styleId: 997, attribution: cloudmadeAttribution}),
+            midnight = L.tileLayer(cloudmadeUrl, {styleId: 1, attribution: cloudmadeAttribution});
 
- 	L.marker([23.750635,90.420871], {icon: homeMarker}).addTo(map).bindPopup("<b>Khilgaon Govt High School");
+            var map = L.map('map', {
+                center: new L.LatLng(23.75092, 90.4253),
+                zoom: 7,
+                layers: [minimal, all_UHC]
+            });
 
- 	L.marker([23.750277,90.422378], {icon: homeMarker}).addTo(map).bindPopup("<b>Khilgaon Girls' School And College");
+            var baseMaps = {
+                "Minimal": minimal,
+                "Night View": midnight
+            };
 
- 	L.marker([23.735973,90.425034], {icon: redMarker}).addTo(map).bindPopup("<b>Railway Hospital");
+            var overlayMaps = {
+                "all_UHC_sadar": all_UHC_sadar,
+                "all_UHC": all_UHC
+            };
+            L.control.layers(baseMaps, overlayMaps).addTo(map);
 
- 	L.marker([23.746363,90.421128], {icon: hospitalMarker}).addTo(map).bindPopup("<b>Jheel Mosque");
+            var popup = L.popup();
 
- 	L.marker([23.746579,90.412545], {icon: shoppingCartMarker}).addTo(map).bindPopup("<b>Mouchak Market");
+            function onMapClick(e) {
+                popup
+                        .setLatLng(e.latlng)
+                        .setContent("You clicked the map at " + e.latlng.toString())
+                        .openOn(map);
+            }
+            map.on('click', onMapClick);
 
- 	L.marker([23.770893,90.414412], {icon: rocketMarker}).addTo(map).bindPopup("<b>Hatir Jheel");
-
-
- 	var popup = L.popup();
-
- 	function onMapClick(e) {
- 		popup
- 		.setLatLng(e.latlng)
- 		.setContent("You clicked the map at " + e.latlng.toString())
- 		.openOn(map);
- 	}
-
- 	map.on('click', onMapClick);
-
- 	</script>
- </body>
- </html>
+        </script>
+    </body>
+</html>
 
