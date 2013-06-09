@@ -29,70 +29,96 @@
 
     	<script>
 
- 	// load a map which has the center at the coordinate 23.75092,90.4253
- 	var map = L.map('map').setView([23.75092,90.4253], 13);
-
- 	L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
- 		maxZoom: 18,
- 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
- 	}).addTo(map);
-
- 	var hospitalMarker = L.AwesomeMarkers.icon({
- 		icon: 'hospital', 
- 		color: 'red'
- 	});
- 	var redMarker = L.AwesomeMarkers.icon({
- 		icon: 'spinner', 
- 		color: 'red',
- 		spin: true
- 	});
- 	var homeMarker = L.AwesomeMarkers.icon({
- 		icon: 'home', 
- 		color: 'darkblue'
- 	});
- 	var shoppingCartMarker = L.AwesomeMarkers.icon({
- 		icon: 'shopping-cart', 
- 		color: 'green'
- 	});
- 	var rocketMarker = L.AwesomeMarkers.icon({
- 		icon: 'rocket', 
- 		color: 'cadetblue'
- 	});
- 	
-
- 	L.marker([23.75092,90.4253]).addTo(map)
- 	.bindPopup("<b>Khilgaon Thana");
-
- 	L.marker([23.7518, 90.42458], {icon: shoppingCartMarker}).addTo(map).bindPopup("<b>Khilgaon Taltala Market");
-
- 	L.marker([23.750635,90.420871], {icon: homeMarker}).addTo(map).bindPopup("<b>Khilgaon Govt High School");
-
- 	L.marker([23.750277,90.422378], {icon: homeMarker}).addTo(map).bindPopup("<b>Khilgaon Girls' School And College");
-
- 	// L.marker([23.735973,90.425034]).addTo(map).bindPopup("<b>Railway Hospital");
- 	L.marker([23.735973,90.425034], {icon: redMarker}).addTo(map).bindPopup("<b>Railway Hospital");
-
- 	// L.marker([23.746363,90.421128]).addTo(map)
- 	// .bindPopup("<b>Jheel Mosque");
- 	L.marker([23.746363,90.421128], {icon: hospitalMarker}).addTo(map).bindPopup("<b>Jheel Mosque");
-
- 	L.marker([23.746579,90.412545], {icon: shoppingCartMarker}).addTo(map).bindPopup("<b>Mouchak Market");
-
- 	L.marker([23.770893,90.414412], {icon: rocketMarker}).addTo(map).bindPopup("<b>Hatir Jheel");
+    // load a map which has the center at the coordinate 23.75092,90.4253
 
 
- 	var popup = L.popup();
+    var hospitalMarker = L.AwesomeMarkers.icon({
+        icon: 'hospital',
+        color: 'red'
+    });
+    var redHospitalMarker = L.AwesomeMarkers.icon({
+        icon: 'hospital',
+        color: 'red'
+    });
+    var greenHospitalMarker = L.AwesomeMarkers.icon({
+        icon: 'hospital',
+        color: 'green'
+    });
+    var redMarker = L.AwesomeMarkers.icon({
+        icon: 'spinner',
+        color: 'red',
+        spin: true
+    });
+    var homeMarker = L.AwesomeMarkers.icon({
+        icon: 'home',
+        color: 'darkblue'
+    });
+    var shoppingCartMarker = L.AwesomeMarkers.icon({
+        icon: 'shopping-cart',
+        color: 'green'
+    });
+    var rocketMarker = L.AwesomeMarkers.icon({
+        icon: 'rocket',
+        color: 'cadetblue'
+    });
 
- 	function onMapClick(e) {
- 		popup
- 		.setLatLng(e.latlng)
- 		.setContent("You clicked the map at " + e.latlng.toString())
- 		.openOn(map);
- 	}
+            // load a map which has the center at the coordinate 23.75092,90.4253
+            var khilgaonRegion = new L.layerGroup();
+            var all_UHC = new L.layerGroup();
+            var all_USC = new L.layerGroup();
 
- 	map.on('click', onMapClick);
+            // var map = L.map('map').setView([23.75092, 90.4253], 13);
+            
 
- 	</script>
+
+            L.marker([23.75092, 90.4253]).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Thana");
+
+            L.marker([23.7518, 90.42458], {icon: shoppingCartMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Taltala Market");
+
+            L.marker([23.750635, 90.420871], {icon: homeMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Govt High School");
+
+            L.marker([23.750277, 90.422378], {icon: homeMarker}).addTo(khilgaonRegion).bindPopup("<b>Khilgaon Girls' School And College");
+
+            L.marker([23.735973, 90.425034], {icon: redMarker}).addTo(khilgaonRegion).bindPopup("<b>Railway Hospital");
+
+            L.marker([23.746363, 90.421128], {icon: hospitalMarker}).addTo(all_UHC).bindPopup("<b>Jheel Mosque");
+
+            L.marker([23.746579, 90.412545], {icon: shoppingCartMarker}).addTo(all_UHC).bindPopup("<b>Mouchak Market");
+
+            var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/bd92fa43571c4092bfc457e9c839d54f/{styleId}/256/{z}/{x}/{y}.png',
+            cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade';
+            var minimal   = L.tileLayer(cloudmadeUrl, {styleId: 22677, attribution: cloudmadeAttribution}),
+            midnight  = L.tileLayer(cloudmadeUrl, {styleId: 999,   attribution: cloudmadeAttribution}),
+            motorways = L.tileLayer(cloudmadeUrl, {styleId: 46561, attribution: cloudmadeAttribution});
+
+            var map = L.map('map', {
+                center: new L.LatLng(23.75092, 90.4253),
+                zoom: 12,
+                layers: [minimal, khilgaonRegion]
+            });
+
+            var baseMaps = {
+                "Minimal": minimal,
+                "Night View": midnight
+            };
+
+            var overlayMaps = {
+                "Motorways": khilgaonRegion,
+                "Cities": all_UHC
+            };
+            L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+            var popup = L.popup();
+
+            function onMapClick(e) {
+                popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(map);
+            }
+            map.on('click', onMapClick);
+
+            </script>
  </body>
  </html>
 
