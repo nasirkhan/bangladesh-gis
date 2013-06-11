@@ -1,5 +1,5 @@
 <?php
-require_once 'configuration.php';
+require_once '../../configuration.php';
 
 $type = "20 Beded Hospital";
 ?>
@@ -14,11 +14,11 @@ $type = "20 Beded Hospital";
 
         <!-- Leafletjs CDN css link -->
         <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" /> -->
-        <link rel="stylesheet" href="library/leafletjs/leaflet.css" />
+        <link rel="stylesheet" href="../../library/leafletjs/leaflet.css" />
         <!-- Font Awesome local -->
-        <link rel="stylesheet" href="library/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../../library/font-awesome/css/font-awesome.min.css">
         <!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet"> -->
-        <link rel="stylesheet" href="library/leaflet.awesome-markers/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="../../library/leaflet.awesome-markers/leaflet.awesome-markers.css">
 
 
         <!--[if lte IE 8]>
@@ -30,8 +30,8 @@ $type = "20 Beded Hospital";
 
         <!-- Leafletjs CDN js link -->
         <!-- <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script> -->
-        <script src="library/leafletjs/leaflet.js"></script>
-        <script src="library/leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
+        <script src="../../library/leafletjs/leaflet.js"></script>
+        <script src="../../library/leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
 
         <script>
 
@@ -50,8 +50,12 @@ $type = "20 Beded Hospital";
             $twenty_bed_hospital_location_marker = "darkblueAmbulanceMarker";
             
             while ($location = mysql_fetch_assoc($result)) {
-            	$lat= (double) $location[latitude];
-            	$long= (double) $location[longitude];
+                $search = array('[', ']');
+                $coordinate = str_replace($search, '', $location[coordinates]);
+                $pieces = explode(",", $coordinate);
+                $long= (double) $pieces[0];
+                $lat= (double) $pieces[1];
+
                 echo "L.marker([$lat, $long], {icon: $twenty_bed_hospital_location_marker}).addTo(twenty_bed_hospital).bindPopup(\"$location[name]\"); ";            	
             }            
             
