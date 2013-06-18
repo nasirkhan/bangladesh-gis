@@ -21,6 +21,7 @@
 
      <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
     <script src="https://raw.github.com/gist/2197042/2b90c41b39b7d5b3a851d8f256de2ebd3fe1fb74/leaflet-google.js"></script>
+    <script type="https://gist.github.com/crofty/2197042/raw/2b90c41b39b7d5b3a851d8f256de2ebd3fe1fb74/leaflet-google.js"></script>
  	<!--[if lte IE 8]>
     	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
     	<![endif]-->
@@ -94,6 +95,9 @@
             midnight  = L.tileLayer(cloudmadeUrl, {styleId: 999,   attribution: cloudmadeAttribution}),
             motorways = L.tileLayer(cloudmadeUrl, {styleId: 46561, attribution: cloudmadeAttribution});
 
+            var googleLayer = new L.Google('ROADMAP');
+            // map.addLayer(googleLayer);
+
             var map = L.map('map', {
             	center: new L.LatLng(23.75092, 90.4253),
             	zoom: 12,
@@ -102,7 +106,8 @@
 
             var baseMaps = {
             	"Minimal": minimal,
-            	"Night View": midnight
+            	"Night View": midnight,
+                "Google Map" : googleLayer
             };
 
             var overlayMaps = {
